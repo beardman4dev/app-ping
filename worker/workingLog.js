@@ -7,19 +7,21 @@ const logCol = db.col("common/test.workingLog")
 
 const startDate = new Date()
 
+let runMinutes = 0
+
 log()
 
 async function log() {
     const lastDate = new Date()
-    const diffSeconds = parseInt((lastDate - startDate) / 1000)
     if (envVars.env === "local") {
         await logCol.findOneAndUpdate(
             { env: envVars.env },
-            { $set: { startDate, lastDate, diffSeconds, env: envVars.env } },
+            { $set: { startDate, lastDate, runMinutes, env: envVars.env } },
             { upsert: true }
         )
     } else {
-        await logCol.findOneAndUpdate({ startDate }, { $set: { lastDate, diffSeconds, env: envVars.env } }, { upsert: true })
+        await logCol.findOneAndUpdate({ startDate }, { $set: { lastDate, runMinutes, env: envVars.env } }, { upsert: true })
     }
+    runMinutes++
     setTimeout(log, 60000)
 }
