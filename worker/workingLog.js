@@ -12,7 +12,14 @@ log()
 async function log() {
     const lastDate = new Date()
     const diffSeconds = parseInt((lastDate - startDate) / 1000)
-    await logCol.findOneAndUpdate({ startDate }, { $set: { lastDate, diffSeconds, env: envVars.env } }, { upsert: true })
-
+    if (envVars.env === "local") {
+        await logCol.findOneAndUpdate(
+            { env: envVars.env },
+            { $set: { startDate, lastDate, diffSeconds, env: envVars.env } },
+            { upsert: true }
+        )
+    } else {
+        await logCol.findOneAndUpdate({ startDate }, { $set: { lastDate, diffSeconds, env: envVars.env } }, { upsert: true })
+    }
     setTimeout(log, 60000)
 }

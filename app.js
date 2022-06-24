@@ -1,16 +1,17 @@
 "use strict"
 ;(async () => {
+    const envVars = require("./common/envVars")
     const express = require("express")
     const app = express()
-    const port = process.env.PORT || 80
 
     await require("./connect/mongodb").initSharedConnections(["common"])
 
     require("./worker/workingLog")
+    app.use(require("./middleware/requestLog"))
 
     await require("./controlles")(app)
 
-    app.listen(port, () => {
+    app.listen(envVars.port, () => {
         console.log("Started")
     })
 })()
