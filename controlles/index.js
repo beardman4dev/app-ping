@@ -14,4 +14,8 @@ module.exports = async (app) => {
         const result = await testCol.find({}).sort({ _id: -1 }).limit(20).toArray()
         res.json(result)
     })
+
+    app.get("/hc", async (req, res) => {
+        res.send("OK")
+    })
 }
