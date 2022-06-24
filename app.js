@@ -6,6 +6,8 @@
 
     await require("./connect/mongodb").initSharedConnections(["common"])
 
+    require("./worker/workingLog")
+
     await require("./controlles")(app)
 
     app.listen(port, () => {
