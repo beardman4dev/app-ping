@@ -10,7 +10,9 @@ const startDate = new Date()
 log()
 
 async function log() {
-    await logCol.findOneAndUpdate({ startDate }, { $set: { lastDate: new Date(), env: envVars.env } }, { upsert: true })
+    const lastDate = new Date()
+    const diffSeconds = parseInt((lastDate - startDate) / 1000)
+    await logCol.findOneAndUpdate({ startDate }, { $set: { lastDate, diffSeconds, env: envVars.env } }, { upsert: true })
 
     setTimeout(log, 60000)
 }
