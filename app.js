@@ -1,13 +1,14 @@
 "use strict"
+;(async () => {
+    const express = require("express")
+    const app = express()
+    const port = process.env.PORT || 80
 
-const express = require("express")
-const app = express()
-const port = process.env.PORT || 80
+    await require("./connect/mongodb").initSharedConnections(["common"])
 
-app.get("/", async (req, res) => {
-    res.send("Hello. How are your.")
-})
+    await require("./controlles")(app)
 
-app.listen(port, () => {
-    console.log("Started")
-})
+    app.listen(port, () => {
+        console.log("Started")
+    })
+})()
