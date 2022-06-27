@@ -1,5 +1,6 @@
 "use strict"
 ;(async () => {
+    require("./middleware/uncaughtException")
     const envVars = require("./common/envVars")
     const express = require("express")
     const app = express()
