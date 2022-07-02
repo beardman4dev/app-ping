@@ -12,6 +12,9 @@ module.exports = async (app) => {
     app.get("/push", async (req, res) => {
         res.send(`push ${new Date()}`)
     })
+    app.get("/date", async (req, res) => {
+        res.send(`Current date:  ${new Date()}`)
+    })
     app.get("/pull", async (req, res) => {
         const result = await testCol.find({}).sort({ _id: -1 }).limit(20).toArray()
         res.json(result)
