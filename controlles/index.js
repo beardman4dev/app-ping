@@ -1,5 +1,7 @@
 "use strict"
 
+const settingsCache = require("../common/settings")
+
 const db = require("../connect/mongodb")
 const testCol = db.col("common/test.logReq")
 
@@ -17,5 +19,8 @@ module.exports = async (app) => {
 
     app.get("/hc", async (req, res) => {
         res.send("OK")
+    })
+    app.get("/settings/slavePingSwitch", async (req, res) => {
+        res.json(await settingsCache.updateSlavePingSetting())
     })
 }

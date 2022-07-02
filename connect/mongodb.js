@@ -39,6 +39,11 @@ function getSharedConnection(clusterName) {
     return clients[clusterNameInUpperCase]
 }
 
+/**
+ * cluster/db.collection
+ *  
+ * @returns 
+ */
 module.exports.col = (collectionNameWithPath) => {
     const parts = collectionNameWithPath.split("/")
     const cluster = parts[0]
