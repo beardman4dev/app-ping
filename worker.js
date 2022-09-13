@@ -27,5 +27,6 @@
         runMinutes++
     }
 
+    log()
     setInterval(log, 60000)
 })()
