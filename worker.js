@@ -1,15 +1,10 @@
 "use strict"
 
-const envVars = require("../common/envVars")
-
-const db = require("../connect/mongodb")
+const envVars = require("./common/envVars")
 const logCol = db.col("common/test.workingLog")
 
 const startDate = new Date()
-
 let runMinutes = 0
-
-log()
 
 async function log() {
     const lastDate = new Date()
@@ -20,8 +15,9 @@ async function log() {
             { upsert: true }
         )
     } else {
-        await logCol.findOneAndUpdate({ startDate, isWorker: false }, { $set: { lastDate, runMinutes, env: envVars.env } }, { upsert: true })
+        await logCol.findOneAndUpdate({ startDate, isWorker: true }, { $set: { lastDate, runMinutes, env: envVars.env } }, { upsert: true })
     }
     runMinutes++
-    setTimeout(log, 60000)
 }
+
+setInterval(log, 60000)
